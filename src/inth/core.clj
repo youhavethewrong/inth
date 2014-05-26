@@ -3,7 +3,7 @@
             [net.cgrand.enlive-html :as html]))
 
 (defn retrieve-url
-  "Retrieves the contents of a URL"
+  "Retrieves the contents of a URL."
   [url]
   (:body (client/get url)))
 
