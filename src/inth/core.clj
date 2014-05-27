@@ -38,7 +38,7 @@
              "http")) links))
 
 
-(defn find-related
+(defn find-related-title
   "Finds links with titles similar to a string."
   [desired links]
   (filter (fn
