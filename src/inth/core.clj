@@ -1,5 +1,6 @@
 (ns inth.core
-  (:require [clj-http.client :as client]
+  (:require [clojure.string :as string]
+            [clj-http.client :as client]
             [net.cgrand.enlive-html :as html]))
 
 (defn retrieve-url
@@ -12,8 +13,37 @@
   [content]
   (map (fn
          [x]
-         ((:attrs x) :href))
+         (let [title (first (:content x))]
+           (assoc {}
+             :title (if
+                        (or
+                         (not
+                          (string? title))
+                         (string/blank? title))
+                      "no title"
+                      title)
+             :link ((:attrs x) :href))))
        (html/select
         (html/html-resource
          (java.io.StringReader. content))
         [:a])))
+
+(defn filter-relative
+  "Filters out relative links."
+  [links]
+  (filter (fn
+            [link]
+            (.startsWith
+             (string/lower-case (:link link))
+             "http")) links))
+
+
+(defn find-related
+  "Finds links with titles similar to a string."
+  [desired links]
+  (filter (fn
+            [link]
+            (.contains
+             (string/lower-case (:title link))
+             (string/lower-case desired)))
+          links))
