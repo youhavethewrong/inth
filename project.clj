@@ -5,4 +5,7 @@
             :url "https://www.apache.org/licenses/LICENSE-2.0"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [clj-http "0.9.1"]
-                 [enlive "1.1.5"]])
+                 [enlive "1.1.5"]]
+  :aot :all
+  :main inth.core
+  :uberjar-name "inth.jar")

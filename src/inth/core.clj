@@ -1,7 +1,8 @@
 (ns inth.core
   (:require [clojure.string :as string]
             [clj-http.client :as client]
-            [net.cgrand.enlive-html :as html]))
+            [net.cgrand.enlive-html :as html])
+  (:gen-class :main true))
 
 (defn retrieve-url
   "Retrieves the contents of a URL."
@@ -47,3 +48,6 @@
              (string/lower-case (:title link))
              (string/lower-case desired)))
           links))
+
+(defn -main [& args]
+    (println (find-related-title (first args) (find-links (retrieve-url "http://news.ycombinator.com"))))) 
