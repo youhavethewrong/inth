@@ -50,4 +50,4 @@
           links))
 
 (defn -main [& args]
-    (println (find-related-title (first args) (find-links (retrieve-url "http://news.ycombinator.com"))))) 
+  (println (find-related-title (first args) (find-links (retrieve-url "http://news.ycombinator.com")))))
