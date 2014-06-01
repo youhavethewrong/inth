@@ -38,16 +38,20 @@
              (string/lower-case (:link link))
              "http")) links))
 
-
 (defn find-related-title
-  "Finds links with titles similar to a string."
+  "Finds links with titles which contain any interesting words."
   [desired links]
   (filter (fn
             [link]
-            (.contains
-             (string/lower-case (:title link))
-             (string/lower-case desired)))
+            (some #(.contains (string/lower-case (:title link))
+                              (string/lower-case %))
+                  desired))
           links))
 
 (defn -main [& args]
-  (println (find-related-title (first args) (find-links (retrieve-url "http://news.ycombinator.com")))))
+  (println
+   (find-related-title
+    (rest args)
+    (find-links
+     (retrieve-url
+      (first args))))))

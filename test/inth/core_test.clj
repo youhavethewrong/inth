@@ -38,6 +38,14 @@
   (testing "Should find interesting articles."
     (is (= 1
            (count
-            (inth.core/find-related-title "clojure"
+            (inth.core/find-related-title ["clojure"]
+                                    (inth.core/find-links
+                                     (slurp local-file))))))))
+
+(deftest find-many-interesting-links
+  (testing "Should find interesting articles on a variety of topics."
+    (is (= 2
+           (count
+            (inth.core/find-related-title ["clojure" "prefix"]
                                     (inth.core/find-links
                                      (slurp local-file))))))))
