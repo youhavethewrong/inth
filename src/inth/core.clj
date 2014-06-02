@@ -1,5 +1,6 @@
 (ns inth.core
-  (:require [clojure.string :as string]
+  (:require [inth.db]
+            [clojure.string :as string]
             [clj-http.client :as client]
             [net.cgrand.enlive-html :as html])
   (:gen-class :main true))
@@ -49,7 +50,7 @@
           links))
 
 (defn -main [& args]
-  (println
+  (inth.db/bulk-insert
    (find-related-title
     (rest args)
     (find-links
