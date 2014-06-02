@@ -14,8 +14,8 @@
   "Extracts the reference and text of a link in a body of HTML content."
   [content]
   (map (fn
-         [x]
-         (let [title (first (:content x))]
+         [anchor]
+         (let [title (first (:content anchor))]
            (assoc {}
              :title (if
                         (or
@@ -24,7 +24,7 @@
                          (string/blank? title))
                       "no title"
                       title)
-             :link ((:attrs x) :href))))
+             :link ((:attrs anchor) :href))))
        (html/select
         (html/html-resource
          (java.io.StringReader. content))
