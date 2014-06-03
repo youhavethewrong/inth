@@ -3,8 +3,11 @@
 A Clojure library designed to scrape HTML pages for links and index them.
 
 ## Usage
+Configure src/inth/db.clj, then: 
 
-FIXME
+    $ lein uberjar
+
+    $ java -jar inth.jar "http://news.ycombinator.com" "clojure" "deep learning" "cupcakes"
 
 ## License
 

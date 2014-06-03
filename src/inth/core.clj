@@ -50,6 +50,7 @@
           links))
 
 (defn -main [& args]
+  "Insert any found articles into the configured database."
   (inth.db/bulk-insert
    (find-related-title
     (rest args)
