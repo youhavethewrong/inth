@@ -49,3 +49,11 @@
             (inth.core/find-related-title ["clojure" "prefix"]
                                     (inth.core/find-links
                                      (slurp local-file))))))))
+
+(deftest find-patterns
+  (testing "Should find articles via regex patterns."
+    (is (= 10
+           (count
+            (inth.core/find-regex-title #"\b[T|t]he\b"
+                                        (inth.core/find-links
+                                         (slurp local-file))))))))

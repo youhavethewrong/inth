@@ -37,7 +37,8 @@
             [link]
             (.startsWith
              (string/lower-case (:link link))
-             "http")) links))
+             "http"))
+          links))
 
 (defn find-related-title
   "Finds links with titles which contain any interesting words."
@@ -49,6 +50,15 @@
                   desired))
           links))
 
+
+(defn find-regex-title
+  "Finds links with titles which contain regex matches."
+  [regex links]
+  (filter (fn
+           [link]
+           (not (nil? (re-find regex (:title link)))))
+          links))
+  
 (defn -main [& args]
   "Insert any found articles into the configured database."
   (inth.db/bulk-insert
