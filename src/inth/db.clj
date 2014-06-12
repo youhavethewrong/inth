@@ -16,6 +16,7 @@
 
 (defn bulk-insert
   [links]
+  (println (str "Inserting: " links))
   (if (not (empty? links))
     (map (fn [link] (insert-article (:title link) (:link link))) links)))
   

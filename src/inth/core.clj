@@ -30,40 +30,41 @@
          (java.io.StringReader. content))
         [:a])))
 
-(defn filter-relative
-  "Filters out relative links."
-  [links]
-  (filter (fn
-            [link]
-            (.startsWith
-             (string/lower-case (:link link))
-             "http"))
-          links))
+(defn filter-links
+  "Filters the list of link hashes with function f."
+  [f links args]
+  (filter #(f args %) links))
+
+(defn find-prefix
+  "Finds links that begin with a prefix, insensitive to case."
+  [prefix link]
+  (some #(.startsWith
+          (string/lower-case (:link link))
+          (string/lower-case %))
+        prefix))
 
 (defn find-related-title
   "Finds links with titles which contain any interesting words."
-  [desired links]
-  (filter (fn
-            [link]
-            (some #(.contains (string/lower-case (:title link))
-                              (string/lower-case %))
-                  desired))
-          links))
-
+  [desired link]
+  (some #(.contains
+          (string/lower-case (:title link))
+          (string/lower-case %))
+        desired))
 
 (defn find-regex-title
   "Finds links with titles which contain regex matches."
-  [regex links]
-  (filter (fn
-           [link]
-           (not (nil? (re-find regex (:title link)))))
-          links))
+  [regex link]
+  (some #(not (nil?
+               (re-find % (:title link))))
+        regex))
   
 (defn -main [& args]
   "Insert any found articles into the configured database."
   (inth.db/bulk-insert
-   (find-related-title
-    (rest args)
-    (find-links
-     (retrieve-url
-      (first args))))))
+   (filter-links
+    find-regex-title
+    (find-links (retrieve-url (first args)))
+    (map (fn
+           [pattern]
+           (re-pattern pattern))
+         (rest args)))))
