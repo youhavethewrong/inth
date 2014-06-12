@@ -12,11 +12,13 @@
 
 (defn insert-article
   [title url]
-  (sql/insert! mysql-db :article {:title title :url url}))
+  (try
+    (sql/insert! mysql-db :article {:title title :url url})
+    (catch com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e (println (str "Already inserted " url)))))
 
 (defn bulk-insert
   [links]
-  (println (str "Inserting: " links))
+  (println (str "Inserting " (count links) " links"))
   (if (not (empty? links))
     (doall (map
             (fn
