@@ -43,6 +43,14 @@
           (string/lower-case %))
         prefix))
 
+(defn find-related-link
+  "Finds links with titles which contain any interesting words."
+  [desired link]
+  (some #(string/includes?
+          (string/lower-case (:link link))
+          (string/lower-case %))
+        desired))
+
 (defn find-related-title
   "Finds links with titles which contain any interesting words."
   [desired link]

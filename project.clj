@@ -3,11 +3,11 @@
   :url "https://github.com/youhavethewrong/inth"
   :license {:name "Apache License, Version 2.0"
             :url "https://www.apache.org/licenses/LICENSE-2.0"}
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [clj-http "0.9.2"]
-                 [enlive "1.1.5"]
-                 [org.clojure/java.jdbc "0.3.3"]
-                 [mysql/mysql-connector-java "5.1.30"]]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [clj-http "2.0.0"]
+                 [enlive "1.1.6"]
+                 [org.clojure/java.jdbc "0.4.2"]
+                 [mysql/mysql-connector-java "5.1.38"]]
   :aot :all
   :main inth.core
   :uberjar-name "inth.jar")
