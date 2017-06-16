@@ -1,14 +1,23 @@
 (ns inth.core
   (:require [inth.db]
+            [clojure.java.io :as io]
             [clojure.string :as string]
             [clj-http.client :as client]
+            [clj-http.cookies :refer [cookie-store]]
             [net.cgrand.enlive-html :as html])
   (:gen-class :main true))
+
+(def useragent "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1")
 
 (defn retrieve-url
   "Retrieves the contents of a URL."
   [url]
-  (:body (client/get url)))
+  (:body (client/get url {:client-params {"http.useragent" useragent}})))
+
+(defn retrieve-url-bin
+  "Retrieves the contents of a URL."
+  [url]
+  (:body (client/get url {:client-params {"http.useragent" useragent} :as :byte-array})))
 
 (defn find-links
   "Extracts the reference and text of a link in a body of HTML content."
@@ -65,7 +74,7 @@
   (some #(not (nil?
                (re-find % (:title link))))
         regex))
-  
+
 (defn -main [& args]
   "Insert any found articles into the configured database."
   (inth.db/bulk-insert

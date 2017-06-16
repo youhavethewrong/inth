@@ -12,7 +12,7 @@
 
 (deftest get-test
   (testing "Should successfully retrieve content via HTTP"
-    (is (= 1154
+    (is (= 1495
            (.length
             (inth.core/retrieve-url "http://ecik.youhavethewrong.info"))))))
 

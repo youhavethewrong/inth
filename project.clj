@@ -4,9 +4,9 @@
   :license {:name "Apache License, Version 2.0"
             :url "https://www.apache.org/licenses/LICENSE-2.0"}
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [clj-http "2.0.0"]
+                 [clj-http "3.0.1"]
                  [enlive "1.1.6"]
-                 [org.clojure/java.jdbc "0.4.2"]
+                 [org.clojure/java.jdbc "0.5.8"]
                  [mysql/mysql-connector-java "5.1.38"]]
   :aot :all
   :main inth.core
